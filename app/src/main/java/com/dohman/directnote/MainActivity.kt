@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         btn_clear.setOnClickListener { edt_main.text?.clear() }
 
         // Debug
-        Toast.makeText(this, "Prefs textsize: ${Prefs.getTextSize(this)}, Slider: ${Prefs.getTextSize(this).toInt()}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Prefs textsize: ${Prefs.getTextSize(this)}, Slider: ${Prefs.getTextSize(this).toInt()}", Toast.LENGTH_LONG).show()
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
