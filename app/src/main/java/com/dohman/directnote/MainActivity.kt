@@ -15,11 +15,24 @@ class MainActivity : AppCompatActivity() {
             setupEditTextListener()
             edt_main.requestFocus()
         }
+
+        setupOnClickListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        clearText()
     }
 
     private fun setupEditTextListener() = edt_main.setOnFocusChangeListener { _, hasFocus ->
         if (hasFocus) {
             this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
         }
+    }
+
+    private fun clearText() = edt_main.text?.clear()
+
+    private fun setupOnClickListeners() {
+        btn_clear.setOnClickListener { clearText() }
     }
 }
