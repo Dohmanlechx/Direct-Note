@@ -2,7 +2,6 @@ package com.dohman.directnote
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.SeekBar
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,18 +17,18 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         setupOnClickListeners()
     }
 
+    override fun onPause() {
+        super.onPause()
+        edt_main.clearFocus()
+    }
+
     private fun setupEditText() {
-        edt_main.textSize = Prefs.getTextSize(ctx = this)
-        edt_main.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-            }
-        }
+        edt_main.textSize = Prefs.getTextSize(ctx = applicationContext)
         edt_main.requestFocus()
     }
 
     private fun setupSlider() {
-        val progressWithOffset = Prefs.getTextSize(this).toInt() - 12
+        val progressWithOffset = Prefs.getTextSize(applicationContext).toInt() - 12
         seekbar.setProgress(progressWithOffset, false)
     }
 
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         btn_clear.setOnClickListener { edt_main.text?.clear() }
 
         // Debug
-//        Toast.makeText(this, "Prefs textsize: ${Prefs.getTextSize(this)}, Slider: ${Prefs.getTextSize(this).toInt()}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(applicationContext, "Prefs textsize: ${Prefs.getTextSize(this)}, Slider: ${Prefs.getTextSize(this).toInt()}", Toast.LENGTH_LONG).show()
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
         textSizeWithOffset.let {
             edt_main.textSize = it
-            Prefs.saveTextSize(ctx = this, textSize = it)
+            Prefs.saveTextSize(ctx = applicationContext, textSize = it)
         }
     }
 }
