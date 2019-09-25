@@ -17,6 +17,11 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         setupOnClickListeners()
     }
 
+    override fun onResume() {
+        super.onResume()
+        edt_main.requestFocus()
+    }
+
     override fun onPause() {
         super.onPause()
         edt_main.clearFocus()
