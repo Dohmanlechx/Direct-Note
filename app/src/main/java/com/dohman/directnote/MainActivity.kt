@@ -7,6 +7,7 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
+    private var hasEditTextBeenInit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +20,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     override fun onResume() {
         super.onResume()
-        edt_main.requestFocus()
+        if (hasEditTextBeenInit) edt_main.requestFocus()
     }
 
     override fun onPause() {
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private fun setupEditText() {
         edt_main.textSize = Prefs.getTextSize(ctx = applicationContext)
         edt_main.requestFocus()
+        hasEditTextBeenInit = true
+
+        // Debug
+        Toast.makeText(applicationContext, "Prefs textsize: ${Prefs.getTextSize(this)}, Actual textsize: ${edt_main.textSize}", Toast.LENGTH_LONG).show()
     }
 
     private fun setupSlider() {
@@ -40,9 +45,6 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     private fun setupOnClickListeners() {
         seekbar.setOnSeekBarChangeListener(this)
         btn_clear.setOnClickListener { edt_main.text?.clear() }
-
-        // Debug
-//        Toast.makeText(applicationContext, "Prefs textsize: ${Prefs.getTextSize(this)}, Slider: ${Prefs.getTextSize(this).toInt()}", Toast.LENGTH_LONG).show()
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
