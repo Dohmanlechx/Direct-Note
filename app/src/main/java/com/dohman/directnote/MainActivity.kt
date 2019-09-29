@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
@@ -12,6 +13,9 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // Layout default is Dark Mode colored
+        if (!Prefs.isDarkModeChosen(applicationContext)) setViewsAtLightMode()
 
         edt_main.post { setupEditText() }
         seekbar.post { setupSlider() }
@@ -34,7 +38,11 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         hasEditTextBeenInit = true
 
         // Debug
-        Toast.makeText(applicationContext, "Prefs textsize: ${Prefs.getTextSize(this)}, Actual textsize: ${edt_main.textSize}", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            applicationContext,
+            "Prefs textsize: ${Prefs.getTextSize(this)}, Actual textsize: ${edt_main.textSize}",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun setupSlider() {
@@ -44,7 +52,40 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun setupOnClickListeners() {
         seekbar.setOnSeekBarChangeListener(this)
-        btn_clear.setOnClickListener { edt_main.text?.clear() }
+        btn_clear.setOnClickListener {
+            /*edt_main.text?.clear()*/
+            val isGoingIntoDarkMode = !Prefs.isDarkModeChosen(applicationContext)
+
+            if (isGoingIntoDarkMode) setViewsAtDarkMode() else setViewsAtLightMode()
+
+            saveDarkModeValue(isDarkMode = isGoingIntoDarkMode)
+        }
+    }
+
+    private fun saveDarkModeValue(isDarkMode: Boolean) = Prefs.saveDarkModeValue(applicationContext, isDarkMode)
+
+    private fun setViewsAtDarkMode() = dryTheWholeLayout(
+        backgroundColor = R.color.colorPrimaryDark,
+        accentColor = R.color.colorAccent,
+        btnClearDrawable = R.drawable.ic_clear_darkmode
+    )
+
+    private fun setViewsAtLightMode() = dryTheWholeLayout(
+        backgroundColor = R.color.colorAccent,
+        accentColor = R.color.colorPrimaryDark,
+        btnClearDrawable = R.drawable.ic_clear_lightmode
+    )
+
+    private fun dryTheWholeLayout(backgroundColor: Int, accentColor: Int, btnClearDrawable: Int) {
+        background.setBackgroundColor(getColor(backgroundColor))
+
+        btn_clear.setBackgroundResource(btnClearDrawable)
+
+        accentColor.let {
+            edt_main.setTextColor(getColor(it))
+            seekbar.progressDrawable.setApiColorFilter(ContextCompat.getColor(applicationContext, it), Mode.MULTIPLY)
+            seekbar.thumb.setApiColorFilter(ContextCompat.getColor(applicationContext, it), Mode.SRC_ATOP)
+        }
     }
 
     override fun onStartTrackingTouch(seekBar: SeekBar?) {}
