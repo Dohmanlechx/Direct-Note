@@ -9,5 +9,5 @@ This app makes you ready to type something with only one click, and the click is
 ### Features
 Support for text sizing of your taste and Light & Dark Mode.
 
-## Author:
+## Author
 - David Öhman
