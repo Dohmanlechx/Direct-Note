@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
     }
 
     private fun setupSlider() {
-        val progressWithOffset = Prefs.getSeekbarProgress(ctx = applicationContext)
-        seekbar.setProgress(progressWithOffset.toInt(), false)
+        seekbar.setProgress(Prefs.getSeekbarProgress(ctx = applicationContext).toInt(), false)
     }
 
     private fun setupOnClickListeners() {
