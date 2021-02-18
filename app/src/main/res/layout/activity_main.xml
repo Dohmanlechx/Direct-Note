@@ -18,21 +18,12 @@
         android:padding="16dp"
         android:textColor="@color/colorAccent"
         android:textCursorDrawable="@null"
-        android:textSize="12sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/btn_clear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/dummy_text" />
-
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/seekbar"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_clear"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_main" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_clear"
@@ -52,6 +43,15 @@
         android:background="@drawable/ic_brightness_darkmode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_main" />
+
+    <androidx.appcompat.widget.AppCompatSeekBar
+        android:id="@+id/seekbar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_clear"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/edt_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

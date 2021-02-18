@@ -6,21 +6,20 @@ object Prefs {
     private const val PREFS_NAME = "DIRECT_NOTE_PREFS"
     private const val PRIVATE_MODE = 0
 
-    private const val PREFS_TEXT_SIZE = "PREFS_TEXT_SIZE"
-    private const val PREFS_DEFAULT_TEXT_SIZE = 12f
+    private const val PREFS_PINCH_SCALE_FACTOR = "PREFS_PINCH_SCALE_FACTOR"
 
     private const val PREFS_DARK_MODE = "PREFS_DARK_MODE"
     private const val PREFS_DEFAULT_DARK_MODE = true
 
-    fun getTextSize(ctx: Context): Float {
+    fun getSeekbarProgress(ctx: Context): Float {
         val prefs = ctx.getSharedPreferences(PREFS_NAME, PRIVATE_MODE)
-        return prefs.getFloat(PREFS_TEXT_SIZE, PREFS_DEFAULT_TEXT_SIZE)
+        return prefs.getFloat(PREFS_PINCH_SCALE_FACTOR, Constants.DEFAULT_FONT_SIZE)
     }
 
-    fun saveTextSize(ctx: Context, textSize: Float) {
+    fun saveSeekbarProgress(ctx: Context, factor: Float) {
         val prefs = ctx.getSharedPreferences(PREFS_NAME, PRIVATE_MODE)
         val editor = prefs.edit()
-        editor.putFloat(PREFS_TEXT_SIZE, textSize)
+        editor.putFloat(PREFS_PINCH_SCALE_FACTOR, factor)
         editor.apply()
     }
 
