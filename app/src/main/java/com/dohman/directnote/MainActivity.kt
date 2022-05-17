@@ -18,19 +18,24 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
         setContentView(R.layout.activity_main)
 
         applicationContext.let {
-            if (!Prefs.isDarkModeChosen(it)) setViewsAtLightMode() // Layout default is Dark Mode colored
+            if (!Prefs.isDarkModeChosen(it)) {
+                setViewsAtLightMode() // Layout default is Dark Mode colored
+            }
             seekbarProgress = Prefs.getSeekbarProgress(it)
         }
 
         edt_main.post { setupEditText() }
         seekbar.post { setupSlider() }
+
         setupOnClickListeners()
         setupOnTouchListeners()
     }
 
     override fun onResume() {
         super.onResume()
-        if (hasEditTextBeenInit) edt_main.requestFocus()
+        if (hasEditTextBeenInit) {
+            edt_main.requestFocus()
+        }
     }
 
     override fun onPause() {
@@ -69,7 +74,11 @@ class MainActivity : AppCompatActivity(), SeekBar.OnSeekBarChangeListener {
 
     private fun btnDarkModeAction() {
         val isGoingIntoDarkMode = !Prefs.isDarkModeChosen(applicationContext)
-        if (isGoingIntoDarkMode) setViewsAtDarkMode() else setViewsAtLightMode()
+        if (isGoingIntoDarkMode) {
+            setViewsAtDarkMode()
+        } else {
+            setViewsAtLightMode()
+        }
         saveDarkModeValue(isDarkMode = isGoingIntoDarkMode)
     }
 
